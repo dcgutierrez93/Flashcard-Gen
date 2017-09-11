@@ -1,8 +1,6 @@
 // require fs
 var fs = require("fs");
 
-module.exports = BasicFlashcard;
-
 // constructor for BasicFlashcard
 function BasicFlashcard(front, back) {
     this.front = front;
@@ -23,3 +21,5 @@ function BasicFlashcard(front, back) {
         });
     };
 }
+// Export Module
+module.exports = BasicFlashcard;

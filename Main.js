@@ -12,28 +12,17 @@ function menu() {
     choices: ["Create", "Show All"],
     name: "menuOptions"
   }]).then(function(answer) {
-    var waitMsg;
-    switch (answer.menuOptions) {
-      case 'Create':
-        console.log("Okay, Lets Create a card!");
-        waitMsg = setTimeOut(createCard, 1000);
-        break;
-
-      case 'Show All':
-        console.log("Okay, Lets take a look at your cards!");
-        waitMsg = setTimeOut(showCards, 1000);
-
-      default:
-        console.log("");
-        console.log("Sorry I don't understand");
-        console.log("");
-
+    if(answer.menuOptions === 'Create'){
+      createCard();
+    } else if (answer.menuOptions === 'Show All') {
+      showCards();
     }
   });
 }
 
 menu();
-// Function to create new card BasicCard or
+
+// Function to create new BasicCard or ClozeFlashcard
 var createCard = function() {
   inquirer.prompt([
     {
@@ -76,7 +65,7 @@ var createCard = function() {
         newBasic.create();
         whatsNext();
       });
-    } else if (answer === 'cloze-flashcard') {
+    } else if (answer.cardType === 'cloze-flashcard') {
       inquirer.prompt([
         {
           name: 'text',
@@ -116,6 +105,7 @@ var createCard = function() {
   });
 }
 
+// Gives option for whats next lists Create new card show all cards or nothing.
 var whatsNext = function() {
   inquirer.prompt([
     {
@@ -132,58 +122,25 @@ var whatsNext = function() {
     }
   ]).then(function(answer){
     if(answer.nextAction === 'create-new-card') {
+      console.log("Okay lets create a new card!");
       addCard();
     } else if (answer.nextAction === 'show-all-cards') {
+      console.log("Okay, lets take a look at your cards");
       showCards();
     } else if (answer.nextAction === 'nothing') {
+      console.log("Thanks for using our service");
       return;
     }
   });
 }
-
+// Prints the cards to the console.
 var showCards = function(){
   fs.readFile('./log.txt', 'utf8', function(err, data){
     if(err) {
       console.log("Error occured: " + err);
     }
-    var questions = data.split(';');
-    var notBlank = function(value) {
-      return value;
-    };
-    questions = questions.filter(notBlank);
-    var count = 0;
-    showQuestion(questions, count);
-  });
-};
-
-var showQuestion = function(array, index){
-  questions = array[index];
-  var parsedQuestion = JSON.parse(questions);
-  var questionText;
-  var questionResponse;
-  if(parsedQuestion.type === 'basic-flashcard'){
-    questionText = parsedQuestion.front;
-    correctResponse = parsedQuestion.back;
-  } else if (parsedQuestion.type === 'cloze-flashcard') {
-    questionText = parsedQuestion.clozeDeleted;
-    correctResponse = parsedQuestion.cloze;
-  }
-  inquirer.prompt([
-    {
-      name: 'response',
-      message: questionText
-    }
-  ]).then(function(answer){
-    if(answer.response === correctResponse){
-      console.log("Correct!");
-      if(index < array.length - 1) {
-        showQuestion(array, index + 1);
-      }
-    } else {
-      console.log("Incorrect!");
-      if(index < array.length - 1) {
-        showQuestion(array, index + 1);
-      }
-    }
+    console.log(data);
+    var questions = data.split(',');
+    console.log(questions);
   });
 };

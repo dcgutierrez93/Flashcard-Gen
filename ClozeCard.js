@@ -1,8 +1,6 @@
 // require fs
 var fs = require("fs");
 
-module.exports = ClozeFlashcard;
-
 // constructor for ClozeFlashcard
 function ClozeFlashcard(text, cloze) {
     this.text = text;
@@ -24,3 +22,5 @@ function ClozeFlashcard(text, cloze) {
         });
     };
 }
+// Export Module
+module.exports = ClozeFlashcard;
