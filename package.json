@@ -1,0 +1,24 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "Flash card generator",
+  "main": "BasicCard.js",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "inquirer": "^3.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcgutierrez93/Flashcard-Gen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcgutierrez93/Flashcard-Gen/issues"
+  },
+  "homepage": "https://github.com/dcgutierrez93/Flashcard-Gen#readme"
+}
